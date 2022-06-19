@@ -1,5 +1,6 @@
-{% extends "article/base.html" %}
+{% extends "base.html" %}
 {% load static %}
+{% load article_tags %}
 {% block title %}articles list{% endblock %}
 {% block content %}
 <div class="container">
@@ -125,6 +126,9 @@ function like_article(id, action){
             </li>
         {% endfor %}
     </ol>
+    <hr>
+    <p class="text-center"><h3>最新文章</h3></p>
+    {% latest_articles 4 %}
 </div>
 </div>
 {% endblock %}
