@@ -20,10 +20,11 @@
     
     <link rel="stylesheet" href="{% static 'editor/css/editormd.preview.css' %}" /> 
     <div id='editormd-view'>
+        {{ article.body | markdown}}
         <!-- 这里不能缩进 -->
-        <textarea id="append-test" style="display:none;">
-{{ article.body }}
-        </textarea> 
+{#        <textarea id="append-test" style="display:none;">#}
+{#{{ article.body }}#}
+{#        </textarea> #}
     </div>
     <div>
         <p class="text-center">
@@ -43,6 +44,7 @@
             <p class="text-center">还没有人对此文章表态</p>
         {% endfor %}
     </div>
+    <p><span style="margin-right: 10px"><strong>Tags:</strong></span>{{ article.article_tag.all | join:', ' }}</p>
     <hr>
     <div>
         <h3><span class="glyphicon glyphicon-bullhorn"></span>本文有{{ comments.count }}条评论</h3>
@@ -129,6 +131,15 @@ function like_article(id, action){
     <hr>
     <p class="text-center"><h3>最新文章</h3></p>
     {% latest_articles 4 %}
+    <p class="text-center"><h3>最多评论文章</h3></p>
+    {% most_commented_articles as most_commented %}
+    <ul>
+        {% for comment_article in most_commented %}
+            <li>
+            <a href="{{ comment_article.get_url_path }}">{{ comment_article.title }}</a>
+            </li>
+        {% endfor %}
+    </ul>
 </div>
 </div>
 {% endblock %}
